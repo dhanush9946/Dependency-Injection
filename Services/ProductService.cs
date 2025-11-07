@@ -10,7 +10,7 @@ namespace Employee3Dep.Services
         private readonly List<Product> products = new List<Product>()
         {
             new Product{Id=1,Name="Samsung Galaxy S23",Description="It is the number one mobile phone in the samsung products"},
-            new Product{Id=1,Name="Asus Tuf Gaming",Description="It is the  budget king Laptop for Gamers"}
+            new Product{Id=2,Name="Asus Tuf Gaming",Description="It is the  budget king Laptop for Gamers"}
         };
 
         public IEnumerable<Product> GetAll() => products;

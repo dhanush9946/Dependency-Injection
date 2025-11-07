@@ -1,4 +1,6 @@
-using Employee3Dep.Services;
+﻿using Employee3Dep.Services;
+using Microsoft.OpenApi.Models; // ✅ Add this
+using Microsoft.AspNetCore.Builder; // ✅ May be needed for UseSwaggerUI()
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,15 +9,30 @@ builder.Services.AddSingleton<IEmployee3Service, Employee3Service>();
 builder.Services.AddSingleton<IProductService, ProductService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+// ✅ Add Swagger services
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Employee3 API",
+        Version = "v1",
+        Description = "API for managing employees and products"
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ✅ Enable Swagger only in development
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Employee3 API v1");
+        options.RoutePrefix = string.Empty; // optional: open Swagger UI at root URL
+    });
 }
 
 app.UseHttpsRedirection();

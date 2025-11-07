@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Employee3Dep.Models;
 using Employee3Dep.Services;
-namespace Employee3Dep.Models
+namespace Employee3Dep.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
