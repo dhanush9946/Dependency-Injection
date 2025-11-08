@@ -1,6 +1,7 @@
 ﻿using Employee3Dep.Services;
 using Microsoft.OpenApi.Models; // ✅ Add this
-using Microsoft.AspNetCore.Builder; // ✅ May be needed for UseSwaggerUI()
+using Microsoft.AspNetCore.Builder;
+using Employee3Dep.Middleware; // ✅ May be needed for UseSwaggerUI()
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,10 +36,17 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseMiddleware<LoginMiddleware>();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Run(async context =>
+{
+    await context.Response.WriteAsync("Hello from .NET Core1");
+});
 
 app.Run();
